@@ -1,0 +1,53 @@
+{{ range $host, $containers := groupBy $ "Env.VIRTUAL_HOST" }}
+upstream {{ $host }} {
+    least_conn;
+{{ range $index, $value := $containers }}
+    server {{ $value.Env.VIRTUAL_HOST }}:{{ $value.Env.VIRTUAL_PORT }} weight=10 max_fails=1 fail_timeout=2;
+{{ end }}
+
+}
+
+server {
+    server_name     {{ $host }};
+    server_tokens   off;
+
+    access_log      /etc/nginx/logs/{{ $host }}_access.log common;
+    error_log       /etc/nginx/logs/{{ $host }}_error.log;
+
+    root /data/;
+
+    index index.html;
+
+    location /api/ {
+        proxy_pass   http://{{ $host }};
+        proxy_set_header    Host              $host;
+        proxy_set_header    X-Real-Ip         $http_x_forwarded_for;
+        proxy_set_header    X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Scheme $scheme; #告知tornado当前使用的是http还是https
+        proxy_redirect      default;
+    }
+
+    location /static/ {
+        access_log off;
+        alias /data/static/;
+    }
+
+    location / {
+         try_files $uri $uri/ /index.html?$query_string;
+    }
+
+    location @rewrites {
+         rewrite ^(.+)$ /index.html last;
+    }
+
+    location /ngx_status {
+        stub_status on;
+        access_log off;
+    }
+
+    location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
+        add_header Pragma public;
+        add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+    }
+}
+{{ end }}
