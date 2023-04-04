@@ -36,9 +36,6 @@ export default {
   },
   watch: {},
   methods: {
-    getLogin() {
-      let token = getToken()
-    },
     sendMessage(data) {
       console.log(`parent send: `, data)
       // 外部vue向iframe内部传数据
@@ -51,6 +48,11 @@ export default {
       switch (data.cmd) {
         case 'ready':
           this.iframeReady = true
+          if (getToken()) {
+            this.login = true
+          } else {
+            this.iframeNeed = true
+          }
           if (this.iframeNeed) {
             this.sendMessage({
               cmd: 'getToken',
