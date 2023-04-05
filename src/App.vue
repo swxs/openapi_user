@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { getToken, setToken, cleanRequests } from './utils/auth'
+import { getToken, setToken, removeToken, cleanRequests } from './utils/auth'
 
 export default {
   name: 'App',
@@ -68,6 +68,16 @@ export default {
               params: {},
             })
           }
+          break
+        case 'logout':
+          if (this.iframeReady) {
+            this.sendMessage({
+              cmd: 'logout',
+              params: {},
+            })
+          }
+          removeToken()
+          this.login = false
           break
         case 'returnToken':
           // 业务逻辑

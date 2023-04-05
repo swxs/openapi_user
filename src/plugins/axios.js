@@ -2,6 +2,7 @@
 
 import Vue from 'vue'
 import axios from 'axios'
+import { getToken, setToken, removeToken, requests } from '../utils/auth'
 
 let config = {}
 
@@ -15,7 +16,25 @@ service.interceptors.request.use(
       config.params._ = new Date().getTime()
     }
 
-    return config
+    const token = getToken()
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+      return config
+    } else {
+      window.postMessage(
+        {
+          cmd: 'getToken',
+          params: {},
+        },
+        '*'
+      )
+      return new Promise((resolve) => {
+        requests.push((token) => {
+          config.headers.Authorization = `Bearer ${token}`
+          resolve(config)
+        })
+      })
+    }
   },
   (error) => {
     return Promise.reject(error)
@@ -31,17 +50,31 @@ service.interceptors.response.use(
       let data = response.data
       if (data.code === 0) {
         return Promise.resolve(data)
+        // return Promise.resolve(data)
+      } else if ([101, 111, 112, 113].includes(data.code)) {
+        // todo 没有token时暂存请求， 等待响应后调用
+        window.postMessage(
+          {
+            cmd: 'getToken',
+            params: {},
+          },
+          '*'
+        )
+        removeToken()
+        return new Promise((resolve) => {
+          requests.push((token) => {
+            response.config.headers.Authorization = `Bearer ${token}`
+            resolve(service(response.config))
+          })
+        })
       } else {
-        console.log(data)
+        console.log('data: ', data)
         return Promise.resolve(data)
       }
     }
   },
   (error) => {
-    return Promise.resolve({
-      code: error.response.status,
-      msg: error.response.data.detail,
-    })
+    return Promise.reject(error)
   }
 )
 
