@@ -73,12 +73,12 @@
               </el-col>
               <el-col :span="8" :offset="10">
                 <el-pagination
-                  v-model:current-page="currentPage"
-                  v-model:page-size="pageSize"
+                  :current-page.sync="currentPage"
+                  :page-size="10"
                   :small="true"
                   :disabled="false"
                   :background="true"
-                  :total="total"
+                  :total.sync="total"
                   layout="prev, pager, next, jumper"
                   @current-change="handleCurrentChange"
                 />
@@ -134,15 +134,16 @@ export default {
       },
       multipleSelection: [],
       currentPage: 1,
-      pageSize: 10,
-      total: 1000,
+      total: 10,
     }
   },
   computed: {},
   components: {},
   created() {},
   async mounted() {
+    // 数据表格
     this.handleCurrentChange(1)
+    // 当前用户
     let tokenInfo = getTokenInfo()
     let data = await selectUser(tokenInfo.user_id)
     this.currentUser = data.data.data
@@ -180,6 +181,7 @@ export default {
     },
     async closeDialog() {
       this.changing = null
+      this.form.username = null
       this.dialogVisible = false
     },
     async handleCurrentChange(val) {
@@ -187,9 +189,11 @@ export default {
       let result = await searchUser({
         use_pager: 1,
         page: this.currentPage,
+        page_number: 10,
         order_by: '-updated',
       })
       this.tableData = result.data.data
+      this.total = result.data.pagination.total
     },
     async logout() {
       window.postMessage(
