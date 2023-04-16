@@ -190,7 +190,7 @@ export default {
         use_pager: 1,
         page: this.currentPage,
         page_number: 10,
-        order_by: '-updated',
+        order_by: ['-updated'],
       })
       this.tableData = result.data.data
       this.total = result.data.pagination.total
