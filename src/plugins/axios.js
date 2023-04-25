@@ -50,23 +50,6 @@ service.interceptors.response.use(
       let data = response.data
       if (data.code === 0) {
         return Promise.resolve(data)
-        // return Promise.resolve(data)
-      } else if ([101, 111, 112, 113].includes(data.code)) {
-        // todo 没有token时暂存请求， 等待响应后调用
-        window.postMessage(
-          {
-            cmd: 'getToken',
-            params: {},
-          },
-          '*'
-        )
-        removeToken()
-        return new Promise((resolve) => {
-          requests.push((token) => {
-            response.config.headers.Authorization = `Bearer ${token}`
-            resolve(service(response.config))
-          })
-        })
       } else {
         console.log('data: ', data)
         return Promise.resolve(data)
@@ -74,7 +57,29 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    return Promise.reject(error)
+    console.log(error.response)
+    if (error.response.status === 401) {
+      // todo 没有token时暂存请求， 等待响应后调用
+      window.postMessage(
+        {
+          cmd: 'getToken',
+          params: {},
+        },
+        '*'
+      )
+      removeToken()
+      return new Promise((resolve) => {
+        requests.push((token) => {
+          error.response.config.headers.Authorization = `Bearer ${token}`
+          resolve(service(error.response.config))
+        })
+      })
+    } else {
+      return Promise.resolve({
+        status: error.response.status,
+        ...error.response.data,
+      })
+    }
   }
 )
 
