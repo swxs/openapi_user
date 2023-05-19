@@ -1,6 +1,6 @@
 <template>
   <div class="common-layout">
-    <el-container>
+    <el-container class="main-box">
       <el-aside width="200px"> </el-aside>
       <el-container>
         <el-header>
@@ -210,6 +210,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
+.main-box {
+  height: 100%;
+  position: absolute;
+}
+
 .el-aside {
   background-color: #000000;
 }
