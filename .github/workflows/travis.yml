@@ -22,7 +22,7 @@ jobs:
       - name: generate dist folder
         run: |
           npm install -g yarn
-          yarn
+          yarn install
           yarn build
 
       - name: login aliyuncs
