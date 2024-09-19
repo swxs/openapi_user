@@ -22,7 +22,6 @@ jobs:
       - name: generate dist folder
         run: |
           npm install -g yarn
-          rm yarn.lock
           yarn install
           yarn build
 
