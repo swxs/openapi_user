@@ -17,7 +17,7 @@ export default {
   async mounted() {
     // 获取文件地址
     let filePath = await getPathInfo(this.file_id)
-    window.open(filePath.data.path)
+    window.open(filePath.data.path, '_blank')
     window.close()
   },
 }
