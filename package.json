@@ -56,12 +56,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/swxs/openapi_auth.git"
+    "url": "git+https://github.com/swxs/openapi_user.git"
   },
   "author": "swxs",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/swxs/openapi_auth/issues"
+    "url": "https://github.com/swxs/openapi_user/issues"
   },
-  "homepage": "https://github.com/swxs/openapi_auth#readme"
+  "homepage": "https://github.com/swxs/openapi_user#readme"
 }

@@ -1,7 +1,24 @@
 <template>
   <div class="common-layout">
     <el-container class="main-box">
-      <el-aside width="200px"> </el-aside>
+      <el-aside width="200px">
+        <el-menu
+          :default-active="defaultMenu"
+          class="el-menu-vertical-demo"
+          background-color="#000000"
+          text-color="#ffffff"
+        >
+          <el-menu-item
+            v-for="item in menuList"
+            :key="item.name"
+            :index="item.name"
+            @click="go(item.name)"
+          >
+            <i :class="item.icon"></i>
+            <span slot="title">{{ item.title }}</span>
+          </el-menu-item>
+        </el-menu>
+      </el-aside>
       <el-container>
         <el-header>
           <el-row class="mb-4 header-main">
@@ -15,11 +32,6 @@
                     currentUser.username
                   }}</el-dropdown-item>
                   <el-dropdown-item>
-                    <span @click.prevent="showDialog(currentUser)"
-                      >修改信息</span
-                    ></el-dropdown-item
-                  >
-                  <el-dropdown-item>
                     <span @click.prevent="logout()"
                       >登&emsp;&emsp;出</span
                     ></el-dropdown-item
@@ -30,91 +42,16 @@
           </el-row>
         </el-header>
         <el-main>
-          <el-row class="mb-4 main-head">
-            全部用户
-          </el-row>
-
-          <div class="main-body">
-            <el-table ref="multipleTable" :data="tableData" style="width: 100%">
-              <el-table-column
-                property="username"
-                label="用户名"
-                fixed="left"
-                min-width="180"
-              />
-              <el-table-column label="创建时间" width="130">
-                <template #default="user">
-                  <span>{{ formatDate(user.row.created) }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column property="phone" label="手机号" width="120" />
-              <el-table-column property="email" label="邮箱" min-width="120" />
-              <el-table-column label="操作" min-width="100" fixed="right">
-                <template #default="user">
-                  <el-button
-                    link
-                    type="primary"
-                    size="mini"
-                    @click.prevent="showDialog(user.row)"
-                  >
-                    更新
-                  </el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-
-            <el-divider />
-
-            <el-row class="mb-4 main-tools">
-              <el-col :span="4" :offset="1">
-                <el-button type="primary" size="mini" @click="showDialog(null)">
-                  创建用户
-                </el-button>
-              </el-col>
-              <el-col :span="8" :offset="10">
-                <el-pagination
-                  :current-page.sync="currentPage"
-                  :page-size="10"
-                  :small="true"
-                  :disabled="false"
-                  :background="true"
-                  :total.sync="total"
-                  layout="prev, pager, next, jumper"
-                  @current-change="handleCurrentChange"
-                />
-              </el-col>
-            </el-row>
-          </div>
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
-
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="80%">
-      <el-form :model="form">
-        <el-form-item label="用户名" :label-width="formLabelWidth">
-          <el-input v-model="form.username" autocomplete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="createOrUpdateUser()"
-          >确 定</el-button
-        >
-        <el-button type="danger" @click="closeDialog()">取 消</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import {
-  searchUser,
-  selectUser,
-  createUser,
-  updateUser,
-  deleteUser,
-} from '../api/User.js'
+import { selectUser } from '../api/User.js'
 import { getTokenInfo } from '../utils/auth'
-import { getDateFormat } from '../utils/dateUtils'
 
 export default {
   name: 'home',
@@ -123,77 +60,37 @@ export default {
       currentUser: {
         username: '',
       },
-      tableData: [],
-      changing: null,
-      dialogVisible: false,
-      dialogTitle: '新增用户',
-      formLabelWidth: '100px',
-      form: {
-        username: null,
-        nickname: null,
-      },
-      multipleSelection: [],
-      currentPage: 1,
-      total: 10,
+      showUserInfoDialog: false,
+      menuList: [
+        {
+          name: 'user',
+          icon: 'el-icon-user',
+          title: '用户管理',
+        },
+        {
+          name: 'file',
+          icon: 'el-icon-files',
+          title: '文件管理',
+        },
+      ],
+      defaultMenu: 'user',
     }
   },
   computed: {},
   components: {},
   created() {},
   async mounted() {
-    // 数据表格
-    this.handleCurrentChange(1)
+    // 默认为用户管理页面
+    await this.go(this.defaultMenu)
+
     // 当前用户
     let tokenInfo = getTokenInfo()
     let data = await selectUser(tokenInfo.user_id)
     this.currentUser = data.data.data
   },
   methods: {
-    formatDate(date) {
-      return getDateFormat(date)
-    },
-    async showDialog(user) {
-      console.log(user)
-      if (user) {
-        this.changing = user
-        this.dialogTitle = '更新用户'
-        this.form.username = user.username
-      } else {
-        this.changing = null
-        this.dialogTitle = '新增用户'
-      }
-      this.dialogVisible = true
-    },
-    async createOrUpdateUser() {
-      if (this.changing) {
-        let data = {
-          username: this.form.username,
-        }
-        const user = await updateUser(this.changing.id, data)
-      } else {
-        let data = {
-          username: this.form.username,
-        }
-        const user = await createUser(data)
-      }
-      await this.handleCurrentChange(this.currentPage)
-      await this.closeDialog()
-    },
-    async closeDialog() {
-      this.changing = null
-      this.form.username = null
-      this.dialogVisible = false
-    },
-    async handleCurrentChange(val) {
-      this.currentPage = val
-      let result = await searchUser({
-        use_pager: 1,
-        page: this.currentPage,
-        page_number: 10,
-        order_by: ['-updated'],
-      })
-      this.tableData = result.data.data
-      this.total = result.data.pagination.total
+    async go(target) {
+      this.$router.push(`/${target}`)
     },
     async logout() {
       window.postMessage(
