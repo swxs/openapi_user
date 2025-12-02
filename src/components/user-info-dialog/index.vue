@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     class="user-info-dialog"
-    :visible.sync="show"
+    :visible="show"
     :title="dialogTitle"
     width="80%"
     @close="close"
