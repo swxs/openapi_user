@@ -17,7 +17,9 @@ jobs:
           ref: master
 
       - name: install nodejs
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'v14.21.1'
 
       - name: Update CA certificates
         run: |
