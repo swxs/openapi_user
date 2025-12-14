@@ -14,7 +14,7 @@
         />
         <el-table-column label="创建时间" width="130">
           <template #default="user">
-            <span>{{ formatDate(user.row.created) }}</span>
+            <span>{{ formatDate(user.row.create_at) }}</span>
           </template>
         </el-table-column>
         <el-table-column property="phone" label="手机号" width="120" />
