@@ -1,4 +1,19 @@
 module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+    node: true
+  },
+  extends: [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended',
+    '@vue/prettier'
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    parser: '@babel/eslint-parser',
+    sourceType: 'module'
+  },
   rules: {
     'space-before-function-paren': [
       'error',
@@ -19,10 +34,6 @@ module.exports = {
     'no-unused-vars': [
       'warn',
       { vars: 'local', args: 'none', ignoreRestSiblings: false }
-    ],
-    "parserOptions": {
-      "ecmaVersion": 7,
-      "sourceType": "module"
-    }
+    ]
   }
 }
