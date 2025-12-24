@@ -3,6 +3,8 @@ node_modules
 /dist
 
 # document created by LLM
+.claudeignore
+CLAUDE.md
 docs/
 
 # local env files
