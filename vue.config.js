@@ -1,4 +1,6 @@
 // vue.config.js
+const path = require('path')
+
 module.exports = {
   devServer: {
     port: 8083, // 指定启动端口为 8083
@@ -10,6 +12,28 @@ module.exports = {
           '^/api': ''
         }
       }
+    }
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        vue: '@vue/compat'
+      }
+    },
+    module: {
+      rules: [
+        {
+          test: /\.vue$/,
+          loader: 'vue-loader',
+          options: {
+            compilerOptions: {
+              compatConfig: {
+                MODE: 2
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

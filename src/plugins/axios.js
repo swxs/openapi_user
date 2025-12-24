@@ -1,6 +1,5 @@
 'use strict'
 
-import Vue from 'vue'
 import axios from 'axios'
 import { getToken, getRefreshToken, removeToken } from '../utils/auth'
 import { refreshAccessToken, redirectToAuthorization } from '../utils/oauth'
@@ -238,22 +237,4 @@ service.interceptors.response.use(
   }
 )
 
-Plugin.install = function(Vue, options) {
-  Vue.axios = service
-  Object.defineProperties(Vue.prototype, {
-    axios: {
-      get() {
-        return service
-      },
-    },
-    $axios: {
-      get() {
-        return service
-      },
-    },
-  })
-}
-
-Vue.use(Plugin)
-
-export default Plugin
+export default service
