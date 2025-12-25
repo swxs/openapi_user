@@ -40,10 +40,7 @@ jobs:
         env:
           NODE_TLS_REJECT_UNAUTHORIZED: '0'
         run: |
-          npm config set network-timeout 600000
-          # 如果镜像源仍有 SSL 问题，临时禁用严格 SSL 检查
-          npm config set strict-ssl false
-          npm ci --prefer-offline --no-audit
+          npm ci --no-audit
           npm run build
 
       - name: login aliyuncs
