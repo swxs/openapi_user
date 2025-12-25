@@ -1,63 +1,52 @@
 <template>
   <div class="user-view">
-    <el-row class="mb-4 main-head">
+    <a-row class="mb-4 main-head">
       用户管理
-    </el-row>
+    </a-row>
 
     <div class="main-body">
-      <el-table ref="multipleTable" :data="tableData" style="width: 100%">
-        <el-table-column
-          property="username"
-          label="用户名"
-          fixed="left"
-          min-width="180"
-        />
-        <el-table-column label="创建时间" width="130">
-          <template #default="user">
-            <span>{{ formatDate(user.row.create_at) }}</span>
+      <a-table 
+        ref="multipleTable" 
+        :dataSource="tableData" 
+        :columns="columns"
+        :pagination="false"
+        style="width: 100%"
+        :scroll="{ x: 800 }"
+      >
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'create_at'">
+            <span>{{ formatDate(record.create_at) }}</span>
           </template>
-        </el-table-column>
-        <el-table-column property="phone" label="手机号" width="120" />
-        <el-table-column property="email" label="邮箱" min-width="120" />
-        <el-table-column label="操作" min-width="100" fixed="right">
-          <template #default="user">
-            <el-button
-              link
-              type="primary"
-              size="mini"
-              @click.prevent="showDialog(user.row)"
+          <template v-else-if="column.key === 'action'">
+            <a-button
+              type="link"
+              size="small"
+              @click.prevent="showDialog(record)"
             >
               更新
-            </el-button>
+            </a-button>
           </template>
-        </el-table-column>
-      </el-table>
+        </template>
+      </a-table>
 
-      <el-divider />
+      <a-divider style="margin: 16px 0;" />
 
-      <el-row class="mb-4 main-tools">
-        <el-col :span="4" :offset="1">
-          <el-button type="primary" size="mini" @click="showDialog(null)">
-            创建用户
-          </el-button>
-        </el-col>
-        <el-col :span="8" :offset="10">
-          <el-pagination
-            :current-page.sync="currentPage"
-            :page-size="10"
-            :small="true"
-            :disabled="false"
-            :background="true"
-            :total.sync="total"
-            layout="prev, pager, next, jumper"
-            @current-change="handleCurrentChange"
-          />
-        </el-col>
-      </el-row>
+      <div class="main-tools">
+        <a-button type="primary" @click="showDialog(null)">
+          创建用户
+        </a-button>
+        <a-pagination
+          v-model:current="currentPage"
+          :page-size="10"
+          :total="total"
+          :show-quick-jumper="true"
+          :show-size-changer="false"
+          @change="handleCurrentChange"
+        />
+      </div>
     </div>
 
     <user-info-dialog
-      v-if="showUserInfoDialog"
       :visible="showUserInfoDialog"
       :editData="currentUser"
       :type="type"
@@ -71,7 +60,6 @@ import {
   searchUser,
   selectUser,
   searchUserAuth,
-  getUserSearcher,
 } from '../api/User.js'
 import { getDateFormat } from '../utils/dateUtils'
 import userInfoDialog from '../components/user-info-dialog'
@@ -90,6 +78,39 @@ export default {
       showUserInfoDialog: false,
       currentUser: {},
       type: 'create',
+      columns: [
+        {
+          title: '用户名',
+          dataIndex: 'username',
+          key: 'username',
+          fixed: 'left',
+          width: 180,
+        },
+        {
+          title: '创建时间',
+          dataIndex: 'create_at',
+          key: 'create_at',
+          width: 180,
+        },
+        {
+          title: '手机号',
+          dataIndex: 'phone',
+          key: 'phone',
+          width: 120,
+        },
+        {
+          title: '邮箱',
+          dataIndex: 'email',
+          key: 'email',
+          width: 200,
+        },
+        {
+          title: '操作',
+          key: 'action',
+          fixed: 'right',
+          width: 100,
+        },
+      ],
     }
   },
   computed: {},
@@ -104,7 +125,7 @@ export default {
     },
     async handleCurrentChange(val) {
       this.currentPage = val
-      let result = await getUserSearcher({
+      let result = await searchUser({
         use_pager: 1,
         page: this.currentPage,
         page_number: 10,
@@ -134,25 +155,26 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-.el-header {
-  .header-main {
-    line-height: 70px;
-    .user-settings {
-      font-size: 28px;
-    }
-  }
-}
-.el-main {
-  background-color: #fafbf6;
+.user-view {
   .main-head {
     line-height: 80px;
-    font-size: 32px;
+    font-size: 24px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    margin-bottom: 16px;
   }
   .main-body {
     background-color: #ffffff;
+    padding: 24px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 
     .main-tools {
+      padding-top: 16px;
       padding-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
   }
 }
