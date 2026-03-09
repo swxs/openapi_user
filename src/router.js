@@ -20,6 +20,16 @@ const routes = [
         name: 'file',
         component: () => import('./views/file-view.vue'),
       },
+      {
+        path: '/workflow',
+        name: 'workflow',
+        component: () => import('./views/workflow-view.vue'),
+      },
+      {
+        path: '/workflow/runs',
+        name: 'workflowRuns',
+        component: () => import('./views/workflow-runs-view.vue'),
+      },
     ],
   },
   {
