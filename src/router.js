@@ -20,6 +20,11 @@ const routes = [
         name: 'file',
         component: () => import('./views/file-view.vue'),
       },
+      {
+        path: '/sudoku',
+        name: 'sudoku',
+        component: () => import('./views/sudoku-view.vue'),
+      },
     ],
   },
   {

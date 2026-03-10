@@ -61,7 +61,7 @@
 <script>
 import { selectUser } from '../api/User.js'
 import { getTokenInfo } from '../utils/auth'
-import { UserOutlined, FileTextOutlined } from '@ant-design/icons-vue'
+import { UserOutlined, FileTextOutlined, AppstoreOutlined } from '@ant-design/icons-vue'
 import userInfoDialog from '../components/user-info-dialog'
 
 export default {
@@ -69,6 +69,7 @@ export default {
   components: {
     UserOutlined,
     FileTextOutlined,
+    AppstoreOutlined,
     'user-info-dialog': userInfoDialog,
   },
   data() {
@@ -88,6 +89,11 @@ export default {
           icon: 'file',
           title: '文件管理',
         },
+        {
+          name: 'sudoku',
+          icon: 'sudoku',
+          title: '数独谜题',
+        },
       ],
       defaultMenu: 'user',
       selectedKeys: ['user'],
@@ -98,6 +104,7 @@ export default {
       return {
         user: UserOutlined,
         file: FileTextOutlined,
+        sudoku: AppstoreOutlined,
       }
     },
   },
