@@ -1,3 +1,5 @@
+@import './design-tokens.less';
+
 abbr[title],
 acronym[title] {
   cursor: help;
@@ -39,13 +41,16 @@ html {
   overflow-y: scroll;
   text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--ou-font-body);
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
 body,
 figure {
   margin: 0;
+  font-family: var(--ou-font-body);
+  color: var(--ou-ink);
+  -webkit-font-smoothing: antialiased;
 }
 a:focus {
   outline: dotted thin;
@@ -115,8 +120,7 @@ button,
 input,
 select,
 textarea {
-  font: 12px/1 'Microsoft Yahei', '微软雅黑', '宋体', Arial, Tahoma, Helvetica,
-    '\5b8b\4f53', sans-serif;
+  font: 14px/1.45 var(--ou-font-body);
   font-size: 100%;
   border: none;
   background-color: transparent;

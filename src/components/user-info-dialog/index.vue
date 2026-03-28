@@ -1,11 +1,12 @@
 <template>
   <a-modal
-    class="user-info-dialog"
+    wrap-class-name="ou-modal-shelf"
     :open="visible"
     :title="dialogTitle"
     width="500px"
     @cancel="close"
   >
+    <div class="ou-modal-shelf-inner">
     <a-form :model="form" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
       <a-form-item label="用户名">
         <a-input 
@@ -44,6 +45,7 @@
         <span v-else>{{ form.email || '-' }}</span>
       </a-form-item>
     </a-form>
+    </div>
     <template #footer>
       <a-button @click="close">{{ type === 'view' ? '关 闭' : '取 消' }}</a-button>
       <a-button v-if="type !== 'view'" type="primary" @click="createOrUpdateUser">确 定</a-button>
@@ -145,6 +147,3 @@ export default {
   },
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" scoped></style>

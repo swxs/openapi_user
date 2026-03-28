@@ -1,19 +1,21 @@
 <template>
-  <div class="error">
-    <h3>路由出错了, 无页面</h3>
+  <div class="ou-state-page ou-state-page--404">
+    <div class="ou-state-page__mark" />
+    <h1 class="ou-state-page__title">页面不存在</h1>
+    <p class="ou-state-page__desc">
+      该路由未注册或链接已失效。请从侧栏返回已授权的功能模块。
+    </p>
   </div>
 </template>
 
 <script>
 export default {
   name: 'NotFound',
-  components: {},
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-.error {
-  margin: 50px auto;
+.ou-state-page--404 {
+  animation: ou-fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 </style>

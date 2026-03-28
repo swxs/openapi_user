@@ -1,6 +1,10 @@
 <template>
-  <div class="error">
-    <h3>正在获取下载文件</h3>
+  <div class="ou-state-page ou-state-page--download">
+    <div class="ou-state-page__mark" />
+    <h1 class="ou-state-page__title">正在准备下载</h1>
+    <p class="ou-state-page__desc">
+      正在解析文件地址，浏览器将打开新窗口。若长时间无响应，请返回文件管理重试。
+    </p>
   </div>
 </template>
 
@@ -15,16 +19,14 @@ export default {
     }
   },
   async mounted() {
-    // 获取文件地址
-    let filePath = await getPathInfo(this.file_id)
+    const filePath = await getPathInfo(this.file_id)
     window.open(filePath.data.path, '_blank')
   },
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-.error {
-  margin: 50px auto;
+.ou-state-page--download {
+  animation: ou-fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 </style>

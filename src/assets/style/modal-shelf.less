@@ -1,0 +1,127 @@
+/* 与数独弹窗一致的「纸张 / 衬线标题 / 砖红强调」外壳，供全局 Modal 复用 */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+SC:wght@500;600&display=swap');
+
+.ou-modal-shelf {
+  --sdm-paper: #f4f1ea;
+  --sdm-paper-2: #ebe6dc;
+  --sdm-ink: #1c1917;
+  --sdm-ink-soft: #57534e;
+  --sdm-line: #d4cfc4;
+  --sdm-accent: #b54a3c;
+  --sdm-accent-soft: rgba(181, 74, 60, 0.12);
+  --sdm-cell-fixed: #e8e4db;
+  --sdm-radius: 3px;
+  --sdm-space: 10px;
+  --sdm-space-lg: 16px;
+
+  .ant-modal-content {
+    padding: 0;
+    border-radius: var(--sdm-radius);
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(28, 25, 23, 0.06),
+      0 28px 64px rgba(28, 25, 23, 0.14);
+  }
+
+  .ant-modal-header {
+    margin: 0;
+    padding: 20px var(--sdm-space-lg) 18px;
+    border-bottom: 1px solid var(--sdm-line);
+    background: var(--sdm-paper);
+  }
+
+  .ant-modal-title {
+    font-family: 'Noto Serif SC', 'Songti SC', serif;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 0.06em;
+    color: var(--sdm-ink);
+  }
+
+  .ant-modal-close {
+    top: 16px;
+    color: var(--sdm-ink-soft);
+  }
+
+  .ant-modal-body {
+    padding: 0;
+    background: var(--sdm-paper);
+    max-height: min(78vh, 720px);
+    overflow-y: auto;
+  }
+
+  .ant-modal-footer {
+    margin: 0;
+    padding: 12px var(--sdm-space-lg);
+    border-top: 1px solid var(--sdm-line);
+    background: #efede6;
+  }
+
+  .ant-modal-footer .ant-btn-default {
+    border-color: var(--sdm-line);
+    color: var(--sdm-ink);
+    font-weight: 500;
+    border-radius: var(--sdm-radius);
+  }
+
+  .ant-modal-footer .ant-btn-default:hover {
+    border-color: var(--sdm-accent);
+    color: var(--sdm-accent);
+    background: #faf8f3;
+  }
+
+  .ant-modal-footer .ant-btn-primary {
+    background: var(--sdm-accent);
+    border-color: var(--sdm-accent);
+    font-weight: 500;
+    border-radius: var(--sdm-radius);
+  }
+
+  .ant-modal-footer .ant-btn-primary:hover {
+    background: #9c3f33;
+    border-color: #9c3f33;
+  }
+}
+
+.ou-modal-shelf .ou-modal-shelf-inner,
+.ou-modal-shelf .manual-modal-root.sdm {
+  padding: var(--sdm-space-lg);
+  font-family:
+    system-ui,
+    'Segoe UI',
+    sans-serif;
+  color: var(--sdm-ink);
+}
+
+.ou-modal-shelf .ou-modal-shelf-inner .ant-form-item {
+  margin-bottom: 18px;
+}
+
+.ou-modal-shelf .ou-modal-shelf-inner .ant-form-item-label > label {
+  color: var(--sdm-ink-soft);
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.ou-modal-shelf .ou-modal-shelf-inner .ant-input {
+  border-radius: var(--sdm-radius);
+  border-color: var(--sdm-line);
+  background: #fffef9;
+  color: var(--sdm-ink);
+}
+
+.ou-modal-shelf .ou-modal-shelf-inner .ant-input:hover {
+  border-color: #c4bdb0;
+}
+
+.ou-modal-shelf .ou-modal-shelf-inner .ant-input:focus,
+.ou-modal-shelf .ou-modal-shelf-inner .ant-input-focused {
+  border-color: var(--sdm-accent);
+  box-shadow: 0 0 0 2px var(--sdm-accent-soft);
+}
+
+.ou-modal-shelf .ou-modal-shelf-inner .ant-form-item-control-input-content {
+  color: var(--sdm-ink);
+  font-size: 14px;
+  line-height: 1.6;
+}

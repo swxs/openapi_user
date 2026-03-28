@@ -8,9 +8,10 @@
             "name": "DEV[USER]",
             "type": "node",
             "request": "launch",
-            "runtimeExecutable": "yarn",
+            "runtimeExecutable": "npm",
             "cwd": "${workspaceFolder}",
-            "runtimeArgs": ["dev"],
+            "runtimeArgs": ["run", "dev"],
+            "console": "integratedTerminal"
         }
     ]
 }

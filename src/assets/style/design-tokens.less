@@ -1,0 +1,55 @@
+/* OpenAPI User — design tokens (industrial / editorial console) */
+:root {
+  /* Surfaces */
+  --ou-void: #0a0e12;
+  --ou-sider: #12181f;
+  --ou-sider-elevated: #1a222d;
+  --ou-ink: #0c0f14;
+  --ou-ink-muted: #5c6575;
+  --ou-paper: #f3efe8;
+  --ou-surface: #faf7f2;
+  --ou-surface-2: #ffffff;
+  --ou-border: rgba(12, 15, 20, 0.09);
+  --ou-border-strong: rgba(12, 15, 20, 0.16);
+
+  /* Accent — brass / ember (not generic blue-purple) */
+  --ou-accent: #c9722e;
+  --ou-accent-hover: #d8863f;
+  --ou-accent-muted: rgba(201, 114, 46, 0.14);
+  --ou-teal: #1f8a7a;
+  --ou-teal-muted: rgba(31, 138, 122, 0.12);
+
+  /* Typography */
+  --ou-font-display: 'Unbounded', 'Source Han Sans SC', 'PingFang SC', sans-serif;
+  --ou-font-body: 'Source Sans 3', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif;
+  --ou-font-mono: 'IBM Plex Mono', 'Consolas', monospace;
+
+  /* Elevation */
+  --ou-shadow-soft: 0 2px 12px rgba(10, 14, 18, 0.06);
+  --ou-shadow-card: 0 4px 24px rgba(10, 14, 18, 0.07), 0 0 0 1px var(--ou-border);
+  --ou-shadow-header: 0 1px 0 var(--ou-border);
+
+  /* Motion */
+  --ou-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ou-dur: 0.35s;
+}
+
+@keyframes ou-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ou-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}

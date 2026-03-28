@@ -1,9 +1,5 @@
 <template>
   <div class="user-view">
-    <a-row class="mb-4 main-head">
-      文件管理
-    </a-row>
-
     <div class="main-body">
       <a-table 
         ref="multipleTable" 
@@ -11,7 +7,7 @@
         :columns="columns"
         :pagination="false"
         style="width: 100%"
-        :scroll="{ x: 800 }"
+        :scroll="{ x: 800, y: TABLE_SCROLL_Y_10_ROWS }"
       >
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'create_at'">
@@ -31,8 +27,6 @@
           </template>
         </template>
       </a-table>
-
-      <a-divider style="margin: 16px 0;" />
 
       <div class="main-tools">
         <a-upload
@@ -60,6 +54,7 @@
 <script>
 import { searchFileInfo } from '../api/FileInfo.js'
 import { getDateFormat } from '../utils/dateUtils'
+import { TABLE_SCROLL_Y_10_ROWS } from '../constants/tableLayout.js'
 
 export default {
   name: 'fileView',
@@ -156,30 +151,3 @@ export default {
   },
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" scoped>
-.user-view {
-  .main-head {
-    line-height: 80px;
-    font-size: 24px;
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.85);
-    margin-bottom: 16px;
-  }
-  .main-body {
-    background-color: #ffffff;
-    padding: 24px;
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-
-    .main-tools {
-      padding-top: 16px;
-      padding-bottom: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
-}
-</style>

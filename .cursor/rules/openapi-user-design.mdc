@@ -1,0 +1,53 @@
+---
+description: openapi_user 控制台 UI 设计语言与实现约定（工业编辑风、令牌、布局、弹窗、列表）
+globs: src/**/*.{vue,less,css,js}
+alwaysApply: false
+---
+
+# openapi_user 设计风格
+
+面向 **OpenAPI 用户控制台** 的 Vue 3 + Ant Design Vue 界面。新增或改版页面时应延续同一气质，并优先复用已有 Less / 类名，避免另起一套视觉。
+
+## 概念与气质
+
+- **方向**：工业 / 编辑风「蓝图台 + 铜饰边」——深侧栏、暖纸色工作区、琥珀主色 + 青绿辅色；拒绝通用「蓝紫渐变 + Inter」式 AI 审美。
+- **层次**：侧栏 = 深色沉浸；主区 = 暖纸 + 白卡片；强调色用于选中态、主按钮、左侧装饰条，而非大面积铺色。
+
+## 实现落点（勿重复造变量）
+
+| 用途 | 文件 |
+|------|------|
+| 全局 CSS 变量、动效名 | `src/assets/style/design-tokens.less`（`--ou-*`） |
+| 壳层、侧栏菜单、内容区 `.main-body` / `.main-tools` | `src/assets/style/global-overrides.less` |
+| 全屏 Modal 外壳 + 表单内区 | `src/assets/style/modal-shelf.less`（`ou-modal-shelf`、`--sdm-*`） |
+| Ant Design 主题 token | `src/App.vue` → `antdTheme` |
+| Web 字体 | `public/index.html`（Unbounded、Source Sans 3、IBM Plex Mono） |
+| 列表表体 10 行高度 | `src/constants/tableLayout.js` → `TABLE_SCROLL_Y_10_ROWS` |
+
+## 颜色与字体（摘要）
+
+- **壳层主色**：`--ou-accent` `#c9722e`，`--ou-teal` `#1f8a7a`；背景 `--ou-paper` / `--ou-surface` / 侧栏 `--ou-sider`。
+- **正文**：`--ou-font-body`（Source Sans 3 + 中文回退）；**标题/顶栏标题**：`--ou-font-display`（Unbounded）；**等宽/API 感**：`--ou-font-mono`（IBM Plex Mono）。
+- **弹窗纸张系**：`--sdm-paper`、`--sdm-ink`、`--sdm-accent` `#b54a3c`（与壳层琥珀区分：弹窗更偏「纸张+砖红」）。
+
+## 布局约定
+
+- 根节点：`#app.openapi-app-root`；带侧栏的主布局：`openapi-shell`；内容区：`openapi-layout__content`。
+- 列表页：**模块标题只在顶栏**（`index.vue` 的 `ou-header__crumb`），子页用 `.main-body` 包表格，**不要**再加大号页内 `main-head`。
+- 表格与底部操作区：**不要**用 `a-divider` 分隔；工具条用 `.main-tools`，全局已设 `margin-top`；主按钮在左、分页在右，`justify-content: space-between`。
+- 列表表格：每页 10 条时，表体固定可视高度使用 `TABLE_SCROLL_Y_10_ROWS` + `:scroll="{ x: …, y: TABLE_SCROLL_Y_10_ROWS }"`，勿随意改行高却不改常量。
+
+## 弹窗
+
+- 标准业务弹窗：`wrap-class-name="ou-modal-shelf"`；表单内容包在 `<div class="ou-modal-shelf-inner">` 内。
+- 复杂内嵌 UI（如数独）可继续用 `.manual-modal-root.sdm`，与 `ou-modal-shelf-inner` 共用 `modal-shelf.less` 内边距规则。
+- 勿在单个业务组件里重写整套 `.ant-modal-header/body/footer`，除非产品明确要求脱离该体系。
+
+## Ant Design 交互
+
+- 组件主题以 `App.vue` 的 `ConfigProvider` 为准；自定义覆盖优先写在 `global-overrides.less` / `modal-shelf.less`，并用 `.openapi-shell`、`.openapi-layout__content`、`.ou-modal-shelf` 等前缀限制作用域，避免污染全局 ant 样式。
+
+## 禁止与谨慎
+
+- **避免**：侧栏浅灰 + 默认蓝主色、大面积紫色渐变、与当前令牌无关的新主色。
+- **谨慎**：新增第三方字体时同步更新 `public/index.html` 或对应 Less `@import`，并检查与 `design-tokens` / `modal-shelf` 的字体栈是否一致。

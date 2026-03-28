@@ -1,0 +1,228 @@
+@import './design-tokens.less';
+
+/* App root: paper field + optional grain */
+.openapi-app-root {
+  min-height: 100vh;
+  background-color: var(--ou-paper);
+  background-image:
+    radial-gradient(ellipse 120% 80% at 100% 0%, rgba(201, 114, 46, 0.06), transparent 50%),
+    radial-gradient(ellipse 80% 60% at 0% 100%, rgba(31, 138, 122, 0.05), transparent 45%);
+}
+
+/* Subtle film grain (CSS-only) */
+.openapi-app-root::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Sidebar brand */
+.ou-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 28px 20px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 8px;
+}
+
+.ou-brand__mark {
+  font-family: var(--ou-font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--ou-void);
+  background: linear-gradient(135deg, var(--ou-accent), #e8a05c);
+  padding: 10px 8px;
+  border-radius: 8px;
+  line-height: 1;
+  box-shadow: 0 4px 14px rgba(201, 114, 46, 0.35);
+}
+
+.ou-brand__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ou-brand__title {
+  font-family: var(--ou-font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.ou-brand__sub {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(243, 239, 232, 0.45);
+}
+
+/* -------- Main layout (index.vue) -------- */
+.openapi-shell {
+  min-height: 100vh;
+  font-family: var(--ou-font-body);
+  color: var(--ou-ink);
+}
+
+.openapi-shell .ant-layout-sider {
+  background: linear-gradient(180deg, var(--ou-sider) 0%, var(--ou-void) 100%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset -1px 0 0 rgba(201, 114, 46, 0.12);
+}
+
+.openapi-shell .ant-layout-header {
+  background: var(--ou-surface-2) !important;
+  border-bottom: 1px solid var(--ou-border);
+  box-shadow: var(--ou-shadow-header);
+  padding: 0 24px !important;
+  height: 64px !important;
+  line-height: normal !important;
+  display: flex !important;
+  align-items: center !important;
+  overflow: hidden;
+}
+
+.openapi-shell .openapi-layout__content {
+  background-color: transparent !important;
+  padding: 28px 32px !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100vh - 64px);
+}
+
+/* Staggered route content */
+.openapi-layout__content > * {
+  animation: ou-fade-up var(--ou-dur) var(--ou-ease-out) both;
+}
+
+/* Page chrome — applies to child views (router-view) */
+.openapi-layout__content .main-body {
+  font-family: var(--ou-font-body);
+  background: var(--ou-surface-2);
+  border: 1px solid var(--ou-border);
+  border-radius: 14px;
+  box-shadow: var(--ou-shadow-card);
+  padding: 24px 28px;
+  position: relative;
+}
+
+.openapi-layout__content .main-body::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 16px;
+  bottom: 16px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(180deg, var(--ou-accent), var(--ou-teal));
+  opacity: 0.85;
+}
+
+.openapi-layout__content .main-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 16px;
+  width: 100%;
+  margin-top: 16px;
+  padding-top: 0;
+  padding-bottom: 8px;
+}
+
+.openapi-layout__content .main-tools .ant-pagination {
+  margin-inline-start: auto;
+}
+
+/* Ant Menu — dark rail */
+.openapi-shell .ant-menu-dark,
+.openapi-shell .ant-menu-dark.ant-menu-inline {
+  background: transparent !important;
+  border-inline-end: none !important;
+  padding: 12px 10px;
+}
+
+.openapi-shell .ant-menu-dark .ant-menu-item {
+  border-radius: 10px !important;
+  margin: 4px 0 !important;
+  height: 44px !important;
+  line-height: 44px !important;
+  color: rgba(243, 239, 232, 0.72) !important;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition:
+    background var(--ou-dur) var(--ou-ease-out),
+    color var(--ou-dur) var(--ou-ease-out),
+    transform 0.2s var(--ou-ease-out);
+}
+
+.openapi-shell .ant-menu-dark .ant-menu-item:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.openapi-shell .ant-menu-dark .ant-menu-item-selected {
+  color: #fff !important;
+  background: linear-gradient(90deg, var(--ou-accent-muted), transparent) !important;
+  box-shadow: inset 3px 0 0 var(--ou-accent);
+}
+
+.openapi-shell .ant-menu-dark .ant-menu-item .anticon {
+  font-size: 16px !important;
+}
+
+/* Tables & pagination in content */
+.openapi-layout__content .ant-table {
+  font-variant-numeric: tabular-nums;
+}
+
+.openapi-layout__content .ant-pagination {
+  margin-inline-start: auto;
+}
+
+/* Utility pages */
+.ou-state-page {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  font-family: var(--ou-font-body);
+}
+
+.ou-state-page__title {
+  font-family: var(--ou-font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--ou-ink);
+  margin: 0 0 12px;
+}
+
+.ou-state-page__desc {
+  color: var(--ou-ink-muted);
+  max-width: 28rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.ou-state-page__mark {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, var(--ou-accent-muted), var(--ou-teal-muted));
+  border: 1px solid var(--ou-border);
+  box-shadow: var(--ou-shadow-soft);
+}
