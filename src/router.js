@@ -11,6 +11,11 @@ const routes = [
     meta: { requiresAuth: true },
     children: [
       {
+        path: '/apps',
+        name: 'apps',
+        component: () => import('./views/apps-view.vue'),
+      },
+      {
         path: '/user',
         name: 'user',
         component: () => import('./views/user-view.vue'),

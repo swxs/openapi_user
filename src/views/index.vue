@@ -71,7 +71,7 @@
 <script>
 import { selectUser } from '../api/User.js'
 import { getTokenInfo } from '../utils/auth'
-import { UserOutlined, FileTextOutlined, AppstoreOutlined } from '@ant-design/icons-vue'
+import { UserOutlined, FileTextOutlined, AppstoreOutlined, ApiOutlined } from '@ant-design/icons-vue'
 import userInfoDialog from '../components/user-info-dialog'
 
 export default {
@@ -80,6 +80,7 @@ export default {
     UserOutlined,
     FileTextOutlined,
     AppstoreOutlined,
+    ApiOutlined,
     'user-info-dialog': userInfoDialog,
   },
   data() {
@@ -89,6 +90,7 @@ export default {
       },
       showUserInfoDialog: false,
       menuList: [
+        { name: 'apps', icon: 'apps', title: '应用管理' },
         { name: 'user', icon: 'user', title: '用户管理' },
         { name: 'file', icon: 'file', title: '文件管理' },
         { name: 'sudoku', icon: 'sudoku', title: '数独谜题' },
@@ -100,6 +102,7 @@ export default {
   computed: {
     iconMap() {
       return {
+        apps: ApiOutlined,
         user: UserOutlined,
         file: FileTextOutlined,
         sudoku: AppstoreOutlined,
@@ -120,7 +123,7 @@ export default {
       immediate: true,
       handler(to) {
         const name = to.name
-        if (name && ['user', 'file', 'sudoku'].includes(name)) {
+        if (name && ['apps', 'user', 'file', 'sudoku'].includes(name)) {
           this.selectedKeys = [name]
         }
       },
