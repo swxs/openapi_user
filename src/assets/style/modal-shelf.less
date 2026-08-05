@@ -1,5 +1,4 @@
 /* 与数独弹窗一致的「纸张 / 衬线标题 / 砖红强调」外壳，供全局 Modal 复用 */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+SC:wght@500;600&display=swap');
 
 .ou-modal-shelf {
   --sdm-paper: #f4f1ea;
@@ -31,7 +30,7 @@
   }
 
   .ant-modal-title {
-    font-family: 'Noto Serif SC', 'Songti SC', serif;
+    font-family: var(--ou-font-display);
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 0.06em;
@@ -86,10 +85,7 @@
 .ou-modal-shelf .ou-modal-shelf-inner,
 .ou-modal-shelf .manual-modal-root.sdm {
   padding: var(--sdm-space-lg);
-  font-family:
-    system-ui,
-    'Segoe UI',
-    sans-serif;
+  font-family: var(--ou-font-body);
   color: var(--sdm-ink);
 }
 

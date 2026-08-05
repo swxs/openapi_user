@@ -17,8 +17,8 @@ export default {
           colorInfo: '#1f8a7a',
           colorSuccess: '#1f8a7a',
           borderRadius: 10,
-          fontFamily: "'Source Sans 3', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif",
-          fontFamilyCode: "'IBM Plex Mono', Consolas, monospace",
+          fontFamily: "'PingFang SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif",
+          fontFamilyCode: "'Consolas', 'Monaco', ui-monospace, monospace",
         },
         components: {
           Layout: {

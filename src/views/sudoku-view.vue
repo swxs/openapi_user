@@ -665,7 +665,7 @@ export default {
   margin: 0;
   min-width: 0;
   color: var(--sdm-ink);
-  font-family: system-ui, 'Segoe UI', sans-serif;
+  font-family: var(--ou-font-body);
   font-size: 13px;
 }
 
@@ -689,7 +689,7 @@ export default {
   background: rgba(28, 25, 23, 0.04);
   font-size: 12px;
   line-height: 1.4;
-  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-family: var(--ou-font-mono);
   font-weight: 500;
   color: var(--sdm-ink);
   letter-spacing: 0.01em;
@@ -747,7 +747,7 @@ export default {
 
 .ou-modal-shelf .sdm-card__title {
   margin: 0;
-  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  font-family: var(--ou-font-display);
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -791,7 +791,7 @@ export default {
   border-color: var(--sdm-accent);
   color: var(--sdm-accent);
   background: var(--sdm-accent-soft);
-  font-family: 'Noto Serif SC', serif;
+  font-family: var(--ou-font-display);
   font-weight: 500;
 }
 
@@ -828,7 +828,7 @@ export default {
 }
 
 .ou-modal-shelf .sdm-code-input.ant-input {
-  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-family: var(--ou-font-mono);
   font-size: 13px;
   line-height: 1.5;
   padding: 10px 12px;
@@ -885,7 +885,7 @@ export default {
   text-align: center;
   border: 1px solid #e5e0d4;
   font-size: 14px;
-  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-family: var(--ou-font-mono);
   box-sizing: border-box;
   color: var(--sdm-ink);
 }
@@ -921,7 +921,7 @@ export default {
   height: 36px;
   line-height: 36px;
   font-size: 14px;
-  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-family: var(--ou-font-mono);
   font-weight: 400;
   color: var(--sdm-ink);
 }

@@ -198,7 +198,7 @@ export default {
 
 .ou-header__crumb {
   margin: 0;
-  font-family: var(--ou-font-display, 'Unbounded', sans-serif);
+  font-family: var(--ou-font-display);
   font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: -0.03em;
